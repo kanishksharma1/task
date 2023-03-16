@@ -1,67 +1,90 @@
-/*
 import { react, useState } from "react";
+import  Skill  from "./Skill";
 
-function Form( ) {
 
-  const [data, setdata] = useState(
-    {
-      fname: "",
-      lname:""
-    }
-  )
-  const [text, setText] = useState("")
+function Form(props) {
 
-  function handleChange (event){
-    setdata(event.target.value)
+  const [note, setNote] = useState({
+    fName: "",
+    lName: "",
+    email: "",
+    phNum: ""
+  });
+ 
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setNote(prevNote => {
+      return{
+        ...prevNote,
+        [name]: value
+      }
+    });
+    
   }
-
-  function handleClick(event) {
-    setText(data)
-    event.preventDefault();
-  }
-    return(
-     
-        <>
-        <form  onSubmit={handleClick} >
-        <div class="h-full w-6/12 fixed top-0 overflow-x-hidden pt-5 left-0">
-  <div class="absolute text-center top-1/2 ">
-  <label class = "pl-9">First Name : </label>
-  <input  value = {data.fname} onChange ={handleChange} type={Text} placeholder="fname"></input>
-  <br></br><br></br>
-  <label class = "pl-9">Last Name : </label>
-  <input type={Text} placeholder="lname"></input>
-  <br></br><br></br>
-  <label class = "pl-9">User Name : </label>
-  <input type={Text} placeholder="User name"></input>
-  <br></br><br></br>
-  <label>E Mail :</label>
-  <input type={"email"} placeholder="User name"></input>
-  <br></br><br></br>
-  <button type="submit" value="submit"> submit  </button>
-
-  </div>
-</div>
-</form>
-
-<div class="h-full w-6/12 fixed top-0 overflow-x-hidden pt-5 right-0">
-  <div class="absolute text-center top-1/2  ">
-    <table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>email</th>
-  </tr>
-  <tr>
-    <td>{text}</td>
-    <td>l name</td>
-    <td>email</td>
-  </tr>
-</table>
-  </div>
-</div>
-        </>
-    )
+function submitNote(event) {
+  props.onAdd(note);
+  setNote({
+    fName: "",
+    lName: "",
+    email: "",
+    phNum: ""
+  })
+  event.preventDefault();
 }
 
+
+  return (
+    <div className="container">    
+      <form autoComplete="off">
+        <input
+          name="fName"
+          onChange={handleChange}
+          value={note.fName}
+          placeholder="First Name"
+        
+        />
+        <br></br><br></br>
+        <input
+          onChange={handleChange}
+          value={note.lName}
+          name="lName"
+          placeholder="Last Name"
+        />
+        <br></br><br></br>
+        <input
+        type={"email"}
+         required
+          onChange={handleChange}
+          value={note.email}
+          name="email"
+          placeholder="Email"
+        />
+        <br></br><br></br>
+        <input
+          type="text"
+          onChange={handleChange}
+          value={note.phNum}
+          name="phNum"
+          placeholder="Phone Num"
+          inputMode="numeric"
+          pattern="\d*"
+          maxLength="10"
+          minLength="10"
+        />
+        <br></br><br></br>
+
+      <Skill />
+
+        <button onClick={submitNote}>Submit</button>
+
+        </form>
+
+        <br></br>
+
+</div>
+  )}
+
 export default Form;
-*/
+
